@@ -4,13 +4,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "app",
+            "mock-zooko",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "app",
+            "mock-zooko",
             "kebab-case"
         ]
     }
