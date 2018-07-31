@@ -7,11 +7,13 @@ import { ContactRequestComponent } from './components/contact-request/contact-re
 import { SignOutComponent } from './components/sign-out/sign-out.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ],
   declarations: [
     SigninComponent,
