@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SigninComponent } from './components/signin/signin.component';
 import { ContactRequestComponent } from './components/contact-request/contact-request.component';
 import { SignOutComponent } from './components/sign-out/sign-out.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AuthComponent } from './containers/auth/auth.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: SigninComponent,
+    component: AuthComponent,
   }, {
     path: 'contact_request',
     component: ContactRequestComponent,

@@ -30,7 +30,7 @@
             <button type="submit" [disabled]="!signinRequestForm.form.valid" class="btn btn-outline-default waves-effect waves-light btn-lg btn-block">Submit</button>
           </div>
         </div>
-        <div *ngIf="showError" class="alert alert-danger">
+        <div *ngIf="errors" class="alert alert-danger">
           Unable to login. Please check your login information.
         </div>
       </form>

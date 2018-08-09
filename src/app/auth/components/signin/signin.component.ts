@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 @Component({
@@ -8,9 +8,9 @@ import { NgForm } from '@angular/forms';
 })
 
 export class SigninComponent implements OnInit {
-  user: any = {};
-  errors: any;
-  showError = false;
+  @Input() user: any;
+  @Input() errors: string;
+  @Output() emitLogin = new EventEmitter<any>();
 
   constructor(private router: Router) { }
 
@@ -18,18 +18,7 @@ export class SigninComponent implements OnInit {
   }
 
   login(signinRequestForm: NgForm) {
-    console.log(signinRequestForm.value);
-    /* this.authService.login(this.user).subscribe(currentUser => {
-      if (currentUser.is_first_time === 0) {
-        this.router.navigate(['/user/profile/update']);
-      } else {
-        this.router.navigate(['/user/home']);
-      }
-      // currentUser.is_first_time=1;
-    }, error => {
-      signinRequestForm.controls['password'].reset();
-      this.errors = error;
-      this.showError = true;
-    }); */
+    this.emitLogin.next(signinRequestForm.value);
+    // TODO add validation and other stuffs here
   }
 }
