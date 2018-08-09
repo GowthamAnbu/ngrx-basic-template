@@ -3,10 +3,13 @@ import { RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material';
 
 import { SimpleLayoutComponent } from './containers/simple-layout/simple-layout.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { FullLayoutComponent } from './containers/full-layout/full-layout.component';
+
+const materialImports = [MatSnackBarModule];
 
 @NgModule({
   imports: [
@@ -14,7 +17,8 @@ import { FullLayoutComponent } from './containers/full-layout/full-layout.compon
     RouterModule,
     HttpModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ...materialImports
   ],
   exports: [
     SimpleLayoutComponent,
@@ -27,3 +31,5 @@ import { FullLayoutComponent } from './containers/full-layout/full-layout.compon
   ]
 })
 export class CoreModule { }
+
+

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 import { User } from '../models/user';
@@ -109,9 +109,8 @@ export class AuthService {
           }
         }
       }),
-      catchError(error => {
-        console.log(error);
-        return of({});
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error) ;
       })
     );
   }
