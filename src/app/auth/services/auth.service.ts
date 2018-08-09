@@ -10,8 +10,59 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private isUserLoggedin = false;
   constructor(private _http: HttpClient) {}
+
+  getUser() {
+    if (localStorage.getItem('currentUser')) {
+        const user: User = JSON.parse(localStorage.getItem('currentUser'));
+      if (user) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  setCurrentUser(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+  }
+
+  setCurrentInstituteAndRole(currentInstitute, currentBranch) {
+    const currentLogUser = this.getUser();
+    localStorage.setItem('currentInstitute', JSON.stringify(currentInstitute));
+    localStorage.setItem('currentBranch', JSON.stringify(currentBranch));
+    if (currentInstitute.role_type === ('Mother' || 'Father' || 'guardian')) {
+        localStorage.setItem('currentRole', 'Parent');
+    } else {
+    localStorage.setItem('currentRole', currentInstitute.pivot.role_type);
+    }
+    currentLogUser.currentInstitute = currentInstitute;
+    currentLogUser.currentBranch = currentBranch;
+    currentLogUser.currentRole = localStorage.getItem('currentRole');
+    this.setCurrentUser(currentLogUser);
+    // this._authEvent.next(currentLogUser);
+  }
+
+  setCurrentCorporationInst(currentCorporationInst) {
+    const currentLogUser = this.getUser();
+    localStorage.setItem('currentRole', 'Corp Admin');
+    currentLogUser.currentInstitute = currentCorporationInst;
+    currentLogUser.currentRole = localStorage.getItem('currentRole');
+    localStorage.setItem('currentCorporationInstitute', JSON.stringify(currentCorporationInst));
+    this.setCurrentUser(currentLogUser);
+  }
+
+  setCurrentCorporation(currentCorporation) {
+    const currentUser = this.getUser();
+    localStorage.setItem('currentRole', 'Corp Admin');
+    currentUser.currentCorporation = currentCorporation;
+    currentUser.currentRole = localStorage.getItem('currentRole');
+    localStorage.setItem('currentCorporation', JSON.stringify(currentCorporation));
+    this.setCurrentUser(currentUser);
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('currentUser');
+  }
 
   login(requestPayload: any): Observable<User|any> {
     return this._http
@@ -19,9 +70,7 @@ export class AuthService {
     .pipe(
       tap(result => console.log(result)),
       map((body) => {
-        return of(body['user']);
-        /*  if (body.token) {
-          this.isUserLoggedin = true;
+         if (body.token) {
           localStorage.setItem('token', body.token);
           if (body.institutes.length > 0 && body.user) {
             localStorage.setItem(
@@ -32,8 +81,7 @@ export class AuthService {
             const currentBranch = body.institutes[0].branches[0];
             this.setCurrentUser(body.user);
             this.setCurrentInstituteAndRole(currentInstitute, currentBranch);
-            results = Observable.of(body.user);
-            return body.user;
+            return body.token;
           }
           if (body.corporation.length > 0 && body.user) {
             localStorage.setItem(
@@ -57,13 +105,9 @@ export class AuthService {
             this.setCurrentUser(body.user);
             this.setCurrentCorporationInst(currentcorp_inst);
             this.setCurrentCorporation(currentCorporation);
-            results = Observable.of(body.user);
-            return body.user;
-          } else {
-            return Observable.throw('Error in Signin');
+            return body.token;
           }
-          // localStorage.setItem('currentCompany',JSON.stringify(body.company));
-        } */
+        }
       }),
       catchError(error => {
         console.log(error);

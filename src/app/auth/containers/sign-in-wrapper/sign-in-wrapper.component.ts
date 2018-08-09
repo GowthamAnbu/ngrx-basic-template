@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'mock-zooko-sign-in-wrapper',
@@ -23,9 +24,9 @@ export class SignInWrapperComponent implements OnInit {
   login(payload) {
     this.user = payload;
     console.log(this.user);
-    this._authService.login(this.user).subscribe(currentUser$ => {
-      // TODO  notify user about error and redirect to login page
-      this.isEmptyObject(currentUser$.value) ? this._router.navigate(['/auth/login']) : this._router.navigate(['/user/dashboard']);
+    this._authService.login(this.user).subscribe((currentUser: User) => {
+      // TODO  notify user about action and redirect to corresponding page
+      this.isEmptyObject(currentUser) === true ? this._router.navigate(['/auth/login']) : this._router.navigate(['/user/dashboard']);
     }, error => {
       this.errors = error;
     });
