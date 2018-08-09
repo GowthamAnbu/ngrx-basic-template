@@ -1,35 +1,51 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
 import { RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material';
 
 import { SimpleLayoutComponent } from './containers/simple-layout/simple-layout.component';
-import { NotificationComponent } from './components/notification/notification.component';
 import { FullLayoutComponent } from './containers/full-layout/full-layout.component';
 
 const materialImports = [MatSnackBarModule];
+
+
+/**
+ * provide the services that are shared across here
+ */
+const providers = [];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    HttpModule,
     FormsModule,
     ReactiveFormsModule,
     ...materialImports
   ],
-  exports: [
-    SimpleLayoutComponent,
-    NotificationComponent,
-  ],
   declarations: [
     SimpleLayoutComponent,
-    NotificationComponent,
     FullLayoutComponent,
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers
+    };
+  }
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: CoreModule
+  ) {
+    if (parentModule) {
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only'
+      );
+    }
+  }
+}
 
 

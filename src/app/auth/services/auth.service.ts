@@ -12,14 +12,8 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   constructor(private _http: HttpClient) {}
 
-  getUser() {
-    if (localStorage.getItem('currentUser')) {
-        const user: User = JSON.parse(localStorage.getItem('currentUser'));
-      if (user) {
-        return user;
-      }
-    }
-    return null;
+  getCurrentUser(): User {
+    return <User>JSON.parse(localStorage.getItem('currentUser'));
   }
 
   setCurrentUser(user) {
@@ -27,7 +21,7 @@ export class AuthService {
   }
 
   setCurrentInstituteAndRole(currentInstitute, currentBranch) {
-    const currentLogUser = this.getUser();
+    const currentLogUser = this.getCurrentUser();
     localStorage.setItem('currentInstitute', JSON.stringify(currentInstitute));
     localStorage.setItem('currentBranch', JSON.stringify(currentBranch));
     if (currentInstitute.role_type === ('Mother' || 'Father' || 'guardian')) {
@@ -43,7 +37,7 @@ export class AuthService {
   }
 
   setCurrentCorporationInst(currentCorporationInst) {
-    const currentLogUser = this.getUser();
+    const currentLogUser = this.getCurrentUser();
     localStorage.setItem('currentRole', 'Corp Admin');
     currentLogUser.currentInstitute = currentCorporationInst;
     currentLogUser.currentRole = localStorage.getItem('currentRole');
@@ -52,7 +46,7 @@ export class AuthService {
   }
 
   setCurrentCorporation(currentCorporation) {
-    const currentUser = this.getUser();
+    const currentUser = this.getCurrentUser();
     localStorage.setItem('currentRole', 'Corp Admin');
     currentUser.currentCorporation = currentCorporation;
     currentUser.currentRole = localStorage.getItem('currentRole');

@@ -29,7 +29,6 @@ export class SignInWrapperComponent implements OnInit {
 
   login(payload) {
     this.user = payload;
-    console.log(this.user);
     this._authService.login(this.user).subscribe((currentUser: User) => {
       this.openSnackBar('successfully logged in', null, {duration: 5000, panelClass: ['primary-snackbar']});
       this._router.navigate(['/user/dashboard']);
