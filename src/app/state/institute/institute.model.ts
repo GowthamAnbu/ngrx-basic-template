@@ -1,0 +1,29 @@
+export interface Institute {
+  id: number;
+  institution_name: string;
+  institute_trading_as: string;
+  institution_email: string;
+  institution_phone: number;
+  primary_contact_name: string;
+  primary_contact_phone: string;
+  primary_contact_email: string;
+  institute_type: string;
+  institute_reg_no: string;
+  institute_vat_no: string;
+  inst_address_line_1: string;
+  inst_address_line_2: string;
+  inst_city: string;
+  inst_state: string;
+  inst_country: string;
+  inst_area_code: number;
+  inst_postal_address_line_1: string;
+  inst_postal_address_line_2: string;
+  inst_postal_city: string;
+  inst_postal_state: string;
+  inst_postal_country: string;
+  inst_postal_area_code: number;
+  inst_website_address: string;
+  profile_picture:  string;
+  pivot: any;
+  branches: any[];
+}

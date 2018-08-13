@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { MatSnackBar, MatSnackBarConfig} from '@angular/material';
+import { Store } from '@ngrx/store';
 
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user';
+import { AppState } from '../../../state/app.interfaces';
+import { Login } from '../../../state/auth/auth.actions';
+import { Authenticate } from '../../../state/auth/auth.model';
+import * as fromAuth from '../../../state/auth';
 
 @Component({
   selector: 'mock-zooko-sign-in-wrapper',
@@ -11,10 +15,10 @@ import { User } from '../../models/user';
   styleUrls: ['./sign-in-wrapper.component.css']
 })
 export class SignInWrapperComponent implements OnInit {
-  user: any = {};
+  user: Authenticate = { username: '', password: '' };
   errors: any;
 
-  constructor(private _authService: AuthService, private _router: Router, public snackBar: MatSnackBar) { }
+  constructor(private _authService: AuthService, private _router: Router, public snackBar: MatSnackBar, private store: Store<AppState>) { }
 
   ngOnInit() {
   }
@@ -29,13 +33,14 @@ export class SignInWrapperComponent implements OnInit {
 
   login(payload) {
     this.user = payload;
-    this._authService.login(this.user).subscribe((currentUser: User) => {
+    this.store.dispatch(new Login(this.user));
+    /* this._authService.login(this.user).subscribe((currentUser: User) => {
       this.openSnackBar('successfully logged in', null, {duration: 5000, panelClass: ['primary-snackbar']});
       this._router.navigate(['/user/dashboard']);
     }, error => {
       this.errors = error;
       this.openSnackBar('username or password is incorrect', null, {duration: 5000, panelClass: ['secondary-snackbar']});
       this._router.navigate(['/auth/login']);
-    });
+    }); */
   }
 }
