@@ -6,10 +6,10 @@ export enum SnackbarActionTypes {
   SnackbarClose = '[Snackbar] Close',
 }
 
-export class SnackbarOpen implements Action {
+export class SnackbarOpenPrimary implements Action {
   readonly type = SnackbarActionTypes.SnackbarOpen;
 
-  readonly matsnackbarconfig: MatSnackBarConfig = {
+  readonly primaryConfig: MatSnackBarConfig = {
     duration : 5000,
     panelClass: ['primary-snackbar']
   };
@@ -19,7 +19,25 @@ export class SnackbarOpen implements Action {
     action?: string,
     config?: MatSnackBarConfig
   }) {
-    this.payload.config = this.payload.config || this.matsnackbarconfig;
+    this.payload.config = this.payload.config || this.primaryConfig;
+  }
+
+}
+
+export class SnackbarOpenSecondary implements Action {
+  readonly type = SnackbarActionTypes.SnackbarOpen;
+
+  readonly secondaryConfig: MatSnackBarConfig = {
+    duration : 5000,
+    panelClass: ['secondary-snackbar']
+  };
+
+  constructor(public payload: {
+    message: string,
+    action?: string,
+    config?: MatSnackBarConfig
+  }) {
+    this.payload.config = this.payload.config || this.secondaryConfig;
   }
 
 }
@@ -28,4 +46,4 @@ export class SnackbarClose implements Action {
   readonly type = SnackbarActionTypes.SnackbarClose;
 }
 
-export type SnackbarActions = SnackbarOpen | SnackbarClose;
+export type SnackbarActions = SnackbarOpenPrimary | SnackbarOpenSecondary | SnackbarClose;

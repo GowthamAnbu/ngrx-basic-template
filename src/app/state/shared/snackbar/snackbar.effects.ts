@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs';
 import { delay, map, tap } from 'rxjs/operators';
-import { SnackbarActionTypes, SnackbarOpen, SnackbarClose } from './snackbar.actions';
+import { SnackbarActionTypes, SnackbarOpenPrimary, SnackbarOpenSecondary, SnackbarClose } from './snackbar.actions';
 
 @Injectable()
 export class SnackbarEffects {
@@ -19,7 +19,7 @@ export class SnackbarEffects {
   @Effect()
   showSnackbar$: Observable<any> = this.actions.ofType(SnackbarActionTypes.SnackbarOpen)
     .pipe(
-      map((action: SnackbarOpen) => action.payload),
+      map((action: SnackbarOpenPrimary | SnackbarOpenSecondary) => action.payload),
       tap(payload => this.matSnackBar.open(payload.message, payload.action, payload.config)),
       delay(5000),
       map(() => new SnackbarClose())

@@ -12,7 +12,7 @@ import {
   LogoutComplete,
   LogoutCancelled, */
 } from './auth.actions';
-import { SnackbarOpen } from '../shared/snackbar/snackbar.actions';
+import { SnackbarOpenPrimary, SnackbarOpenSecondary } from '../shared/snackbar/snackbar.actions';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 // import { MatDialog } from '@angular/material';
@@ -42,9 +42,8 @@ export class AuthEffects {
       tap(() => {
         this.router.navigate(['/user/dashboard']);
       }),
-      map(() => new SnackbarOpen({
+      map(() => new SnackbarOpenPrimary({
         message: 'successfully logged in',
-        config: { duration: 5000}
       })),
     );
 
@@ -57,9 +56,8 @@ export class AuthEffects {
         this.router.navigate(['/auth/login']);
       }),
       map(() =>
-        new SnackbarOpen({
+        new SnackbarOpenSecondary({
           message: 'log in failed',
-          // config: { duration: 5000 }
         })
       )
     );
