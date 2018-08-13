@@ -16,6 +16,7 @@ import { StateModule } from './state/state.module';
   imports: [
     BrowserModule,
     CoreModule.forRoot(),
+    // TODO change the sharedmodule to not forRoot() since it destroys the very meaning of shared
     SharedModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,

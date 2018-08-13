@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth.service';
 import { AppState } from '../../../state/app.interfaces';
 import { Login } from '../../../state/auth/auth.actions';
 import { Authenticate } from '../../../state/auth/auth.model';
-import * as fromAuth from '../../../state/auth';
 
 @Component({
   selector: 'mock-zooko-sign-in-wrapper',

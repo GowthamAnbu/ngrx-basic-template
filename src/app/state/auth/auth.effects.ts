@@ -3,7 +3,6 @@ import { Actions, Effect } from '@ngrx/effects';
 import { map, exhaustMap, catchError, tap, mergeMap } from 'rxjs/operators';
 import { of, empty } from 'rxjs';
 import {
-  AuthActions,
   AuthActionTypes,
   Login,
   LoginSuccess,
@@ -13,6 +12,7 @@ import {
   LogoutComplete,
   LogoutCancelled, */
 } from './auth.actions';
+import { SnackbarOpen } from '../shared/snackbar/snackbar.actions';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 // import { MatDialog } from '@angular/material';
@@ -35,15 +35,34 @@ export class AuthEffects {
       ),
     );
 
-  @Effect({ dispatch: false })
+  @Effect()
   loginSuccesRedirect$ = this.actions$
     .ofType<LoginSuccess>(AuthActionTypes.LoginSuccess)
-    .pipe(tap(() => this.router.navigate(['/user/dashboard'])));
+    .pipe(
+      tap(() => {
+        this.router.navigate(['/user/dashboard']);
+      }),
+      map(() => new SnackbarOpen({
+        message: 'successfully logged in',
+        config: { duration: 5000}
+      })),
+    );
 
-  @Effect({ dispatch: false })
+  @Effect()
   loginFailureRedirect$ = this.actions$
     .ofType<LoginFailure>(AuthActionTypes.LoginFailure)
-    .pipe(tap(() => this.router.navigate(['/auth/login'])));
+    .pipe(
+      tap((error) => {
+        console.log(error);
+        this.router.navigate(['/auth/login']);
+      }),
+      map(() =>
+        new SnackbarOpen({
+          message: 'log in failed',
+          // config: { duration: 5000 }
+        })
+      )
+    );
 
   /* @Effect()
   logoutConfirmation$ = this.actions$

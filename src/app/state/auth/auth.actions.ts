@@ -47,7 +47,7 @@ export class LogoutComplete implements Action {
 } */
 
 export type AuthActions =
-  | Login
+  Login
   | LoginSuccess
   | LoginFailure;
   /* | Logout

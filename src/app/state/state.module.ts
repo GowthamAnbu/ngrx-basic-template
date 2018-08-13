@@ -8,13 +8,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
 import { appMetaReducers, appReducer } from './app.reducer';
 import { CustomRouterStateSerializer } from './shared/utils';
+import { SnackbarEffects } from 'src/app/state/shared/snackbar/snackbar.effects';
+import { AuthEffects } from 'src/app/state/auth/auth.effects';
 
 @NgModule({
   imports: [
     CommonModule,
     StoreRouterConnectingModule,
     StoreModule.forRoot(appReducer, { metaReducers: appMetaReducers }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([SnackbarEffects, AuthEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   declarations: []

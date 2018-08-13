@@ -12,8 +12,6 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { SharedModule } from '../shared/shared.module';
 import { AuthComponent } from './containers/auth/auth.component';
 import { SignInWrapperComponent } from './containers/sign-in-wrapper/sign-in-wrapper.component';
-import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from 'src/app/state/auth/auth.effects';
 
 @NgModule({
   imports: [
@@ -22,7 +20,6 @@ import { AuthEffects } from 'src/app/state/auth/auth.effects';
     HttpClientModule,
     AuthRoutingModule,
     SharedModule,
-    EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [
     SigninComponent,
