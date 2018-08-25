@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: AuthComponent,
-    canActivate: [LoginGuard]
+    // canActivate: [LoginGuard]
   }, {
     path: 'contact_request',
     component: ContactRequestComponent,

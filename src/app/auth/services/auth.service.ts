@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
 
 import { User } from '../models/user';
@@ -54,8 +54,8 @@ export class AuthService {
     this.setCurrentUser(currentUser);
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('currentUser');
+  isLoggedIn(): Observable<boolean> {
+    return of(!!localStorage.getItem('currentUser'));
   }
 
   login(requestPayload: any): Observable<User|any> {
@@ -75,7 +75,7 @@ export class AuthService {
             const currentBranch = body.institutes[0].branches[0];
             this.setCurrentUser(body.user);
             this.setCurrentInstituteAndRole(currentInstitute, currentBranch);
-            return body.token;
+            return body;
           }
           if (body.corporation.length > 0 && body.user) {
             localStorage.setItem(
@@ -99,7 +99,7 @@ export class AuthService {
             this.setCurrentUser(body.user);
             this.setCurrentCorporationInst(currentcorp_inst);
             this.setCurrentCorporation(currentCorporation);
-            return body.token;
+            return body;
           }
         }
       }),

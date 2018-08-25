@@ -29,7 +29,7 @@ export class AuthEffects {
         this.authService
           .login(auth)
           .pipe(
-            map(body => new LoginSuccess({ user: body.user })),
+            map(body => new LoginSuccess(body)),
             catchError(error => of(new LoginFailure(error))),
           ),
       ),

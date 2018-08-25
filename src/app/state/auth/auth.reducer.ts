@@ -1,4 +1,3 @@
-import { Action } from '@ngrx/store';
 import { AuthActions, AuthActionTypes } from '../auth/auth.actions';
 import { User } from '../user/user.model';
 
@@ -15,12 +14,13 @@ export function reducer(state = initialState, action: AuthActions): State {
     case AuthActionTypes.LoginSuccess:
       return { ...state, user: action.payload.user };
     case AuthActionTypes.LoginFailure:
-      return { ...state, user: null };
-    case AuthActionTypes.Login:
-      return { ...state, user: null };
+      return initialState;
     default:
       return state;
   }
 }
 
-export const selectUser = (state: State) => state.user;
+export const selectUser = (state: State) => {
+  console.log(state);
+  return state.user;
+};
