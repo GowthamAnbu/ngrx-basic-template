@@ -9,7 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     UserRoutingModule,
-    SharedModule.forRoot(),
+    SharedModule,
   ],
   declarations: [DashboardComponent]
 })
